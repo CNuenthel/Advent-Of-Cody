@@ -21,4 +21,5 @@ for d_range in data:
             if str_num[:str_num_len//2] == str_num[-str_num_len//2:]:
                 invalid_nums.append(num)
 
+print(invalid_nums)
 print(sum(invalid_nums))
