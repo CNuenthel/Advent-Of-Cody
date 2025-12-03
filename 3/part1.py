@@ -1,7 +1,4 @@
 
-
-
-
 def determine_max_joltage(battery: str) -> int:
     battery_jolts = [int(char) for char in battery]
     max_joltage = 0
