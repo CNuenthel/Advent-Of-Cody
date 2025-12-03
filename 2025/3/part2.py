@@ -2,7 +2,9 @@
 def extract_max_joltage(battery: str) -> int:
     ls_battery = [int(char) for char in battery]
     max_joltage = []
+
     i = -11
+
     while True:
         selectable_slice = ls_battery[0:i]
 
