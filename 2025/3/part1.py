@@ -12,14 +12,10 @@ def determine_max_joltage(battery: str) -> int:
 def main():
     with open("input.txt", "r") as f:
         lines = f.readlines()
-
     lines = [row.replace("\n", "") for row in lines]
-
     joltages = []
-
     for line in lines:
         joltages.append(determine_max_joltage(line))
-
     print(joltages)
     print(sum(joltages))
 
