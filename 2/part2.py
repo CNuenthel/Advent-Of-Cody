@@ -18,7 +18,10 @@ for d_range in data:
                 invalid_nums.append(num)
         else:
             str_num_len = len(str_num)
-            if str_num[:str_num_len//2] == str_num[-str_num_len//2:]:
-                invalid_nums.append(num)
+
+            # if len of num is 10, we need to split by 1,2,3,4,5 - range 1 - len/2
+            for i in range(1, int(str_num_len/2)+1):
+                # check
+                pass
 
 print(sum(invalid_nums))
