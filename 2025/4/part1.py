@@ -1,5 +1,3 @@
-from numpy.ma.extras import row_stack
-
 
 class MatrixMapper:
     def __init__(self, matrix: list):
