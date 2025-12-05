@@ -1,5 +1,9 @@
 
 def merge_range(ranges: list, target_range: tuple):
+    """
+    Takes a range, and continuously merges ranges in a list if those ranges overlap with target range. Once
+    an overlap is not detected, returns the merged range, and the remaining ranges for follow-up merging.
+    """
     while True:
         if not ranges:
             break
