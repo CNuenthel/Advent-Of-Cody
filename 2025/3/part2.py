@@ -28,5 +28,4 @@ if __name__ == "__main__":
         data = f.readlines()
     data = [line.replace("\n", "") for line in data]
     total = [extract_max_joltage(row) for row in data]
-    print(total)
     print(sum(total))
