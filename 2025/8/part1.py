@@ -1,30 +1,54 @@
 import math
+import uuid
 
 with open("input.txt", "r") as f:
     lines = f.readlines()
 
 lines = [line.replace("\n", "") for line in lines]
-print(lines)
-distance_dict = {}
 
-while lines:
-    line = lines.pop(0)
-    x = tuple([int(i) for i in line.split(",")])
-    for l in lines:
-        y = tuple([int(i) for i in l.split(",")])
-        distance_dict[line].append((l, math.dist(x, y)))
-    break
+class Coordinate:
+    def __init__(self, x, y, z):
+        self.coord = (int(x),int(y),int(z))
+        self.connection = None
+        self.connection_distance = None
+        self.circuit_id = None
 
-print(distance_dict)
+    def check_other_coordinate_distance(self, other: "Coordinate"):
+        return math.dist(self.coord, other.coord)
 
-for key, values in distance_dict.items():
-    coord = values[0][0]
-    dist = values[0][1]
+    def set_connection(self, other: "Coordinate"):
+        if not other.circuit_id and not self.circuit_id:
+            self.circuit_id = uuid.uuid4()
 
-    for val in values:
-        if val[1] < dist:
-            coord = val[0]
+        self.circuit_id = connection_id
 
-    print(f"The shortest route from {key} is to {coord} with a distance of {dist}")
+    def __eq__(self, other):
+        return self.coord == other.coord
+
+    def __repr__(self):
+        return str(self.coord)
+
+points = [Coordinate(*line.split(",")) for line in lines]
+
+for point in points:
+    for p in points:
+        if p == point:
+            continue
+
+        shortest_coord = p
+        shortest_dist = 999999999
+
+        dist = point.check_other_coordinate_distance(p)
+        if dist < shortest_dist:
+            shortest_dist = dist
+            shortest_coord = p
+
+    point.set_connection
+
+
+
+
+
+
 
 
