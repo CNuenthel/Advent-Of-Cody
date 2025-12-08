@@ -66,13 +66,12 @@ class Junction:
         self.connection_distance = connection_distance
         self.circuit = circuit
         self.grid = grid
-        print(f"Connecting {self} to {other}")
 
     def __eq__(self, other):
         return self.coord == other.coord
 
     def __repr__(self):
-        return self.id
+        return f"Junction(ID: {self.coord}, CXN: {self.id})"
 
 def main():
     with open("input.txt", "r") as f:
@@ -84,19 +83,26 @@ def main():
     grid = Grid()
 
     for junction in junctions:
+        print(f"Looking at Junction: {junction.coord}.")
         if not junction.connection:
+            print(f"Junction {junction.coord} has no connection.")
             distances = [junction.check_other_coordinate_distance(j) for j in junctions if j != junction]
             shortest_dist: float = min(distances)
             shortest_dist_index: int = distances.index(shortest_dist) + 1
             closest_junc: Junction = junctions[shortest_dist_index]
+            print(f"The closest junction to {junction.coord} is {closest_junc.coord}.")
 
-            if closest_junc.connection:
+            if closest_junc.circuit:
+                print(f"Closest Junction {closest_junc.coord} is already connected on circuit {closest_junc.circuit}. Adding Junction to Closest Junction circuit.")
                 junction.set_connection(other=closest_junc, connection_distance=shortest_dist, circuit=closest_junc.circuit, grid=grid)
                 closest_junc.circuit.add_junction(junction)
             else:
+                print(f"Closest Junction {closest_junc.id} has no connected circuit, building new circuit and joining junctions.")
                 circuit = grid.new_circuit(junction, closest_junc)
                 junction.set_connection(other=closest_junc, connection_distance=shortest_dist, circuit=circuit, grid=grid)
                 closest_junc.set_connection(other=junction, connection_distance=shortest_dist, circuit=circuit, grid=grid)
+        else:
+            print(f"Junction: {junction.coord} is already connected.")
 
     return grid
 
