@@ -1,16 +1,36 @@
 
-with open("input.txt", "r") as f:
-    lines = f.readlines()
+class RedTile:
+    def __init__(self, x: str, y: str):
+        self.x = int(x)
+        self.y = int(y)
 
-cords = [line.replace("\n", "").split(",") for line in lines]
+    def __repr__(self):
+        return f"RTile({self.x}, {self.y})"
 
-sums = []
-for cord in cords:
-    sums.append(int(cord[0]) + int(cord[1]))
+    def find_area(self, other_rt: "RedTile"):
+        return abs(self.x + 1 - other_rt.x) * abs(self.y + 1 - other_rt.y)
 
-minimum_cord = cords[sums.index(min(sums))]
-maximum_cord = cords[sums.index(max(sums))]
+def main():
+    with open("input.txt", "r") as f:
+        lines = f.readlines()
 
-area = (int(maximum_cord[0]) - int(minimum_cord[0])) * (int(maximum_cord[1]) - int(minimum_cord[1]))
+    tiles = [RedTile(*line.replace("\n", "").split(",")) for line in lines]
 
-print(area)
+    max_dist_tiles = []
+    max_area = 0
+
+    for tile in tiles:
+        for t in tiles:
+            if tile == t:
+                continue
+            else:
+                area = tile.find_area(t)
+                if area > max_area:
+                    max_dist_tiles = [tile, t]
+                    max_area = area
+
+    print(max_dist_tiles)
+    print(max_area)
+
+if __name__ == "__main__":
+    main()
