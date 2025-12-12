@@ -68,7 +68,7 @@ def main():
         grid.merge_circuits(c1, c2)
 
     sizes = sorted((len(c.junctions) for c in grid.circuits), reverse=True)
-    print("Answer:", sizes[0] * sizes[1] * sizes[2])
+    print("Answer", sizes[0] * sizes[1] * sizes[2])
 
 
 if __name__ == "__main__":
