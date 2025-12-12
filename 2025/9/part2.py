@@ -159,6 +159,47 @@ Same for say this range:
                       ^ sub   ^ from this
 
             5+2+3 == 10 is True. Sick. 
+
+So lets see what this looks like on our 2 dimensional grid:
+
+0  0  1  2  3  3  3   
+0  0  2  4  6  6  6
+1  2  5  8  11 11*11  <--- x=5, y=2
+2  4  8  12 16 16 16
+3  6  11*16 21 22 23  <--- x=2, y=4
+4  8  14 20 26 28 30
+5  10 17 24 31 34 37
+
+Now if I want to find the area of a rectangle in this matrix at these points:
+
+(5,2) top right, (2,4) bottom left
+x1 = 5, y1 = 2
+x2 = 2, y2 = 4
+
+This is our rectangle in those points. What is the area of the rectangle?
+
+0  0  1  2  3  3  3   
+0  0  2  4  6  6  6
+1  2  5  8  11 11*11
+2  4  8  12 16 16 16
+3  6  11*16 21 22 23  
+4  8  14 20 26 28 30
+5  10 17 24 31 34 37
+
+This is our formula to get the sum: 
+sum =
+    psa[x2][y2]      Total of big area
+  - psa[x1-1][y2]    Subtract Top
+  - psa[x2][y1-1]    Subtract Left
+  + psa[x1-1][y1-1]  Add back the overlap
+
+┌-----------------┐  We take the value at x, the area of the 2d above it
+| o  |          y |  We subtract the area top rectangle, at y
+|-----------------|  We subtract the area left rectangle, at z
+|    |            |  We add back the area o, which we subtracted twice from x due to overlap
+|    |            |
+| z  |          x | This gives us our 2d prefix summary area of the rectangle.
+└-----------------┘
 """
 psa = [[0] * len(row) for row in grid]
 for x in range(len(psa)):
@@ -168,6 +209,9 @@ for x in range(len(psa)):
         topleft = psa[x - 1][y - 1] if x > 0 < y else 0
         psa[x][y] = left + top - topleft + grid[x][y]
 
+for row in psa:
+    print(*row)
+print("")
 
 def valid(x1, y1, x2, y2):
     cx1, cx2 = sorted([xs.index(x1) * 2, xs.index(x2) * 2])
