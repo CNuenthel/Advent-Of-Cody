@@ -15,7 +15,7 @@ def solve(line: str):
     _ = line_items.pop(-1)
     buttons = line_items
 
-    for k in range(1, 10):  # pick sizes 1 through 6
+    for k in range(1, 10):
         perms = list(itertools.permutations(buttons, k))
 
         for perm in perms:

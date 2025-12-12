@@ -37,6 +37,6 @@ def display_ways(ways):
         ]
         print(" ".join(formatted))
 
-display_ways(ways)
+# display_ways(ways)
 total_paths = sum(ways[rows-1])
-print(total_paths)
+# print(total_paths)
